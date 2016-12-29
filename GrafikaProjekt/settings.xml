@@ -1,0 +1,43 @@
+<settings>
+  <program>
+    <frame>true</frame>
+    <mode>1</mode>
+  </program>
+  <images>
+    <image>
+      <filename>dupa.jpg</filename>
+      <center>
+        <x>333</x>
+        <y>666</y>
+      </center>
+      <size>
+        <x>123</x>
+        <y>321</y>
+      </size>
+      <rotation>
+        12.34
+      </rotation>
+      <description>
+        Za gorami i za lasami bylo sobie zlo.
+      </description>
+    </image>
+
+    <image>
+      <filename>dupa2.jpg</filename>
+      <center>
+        <x>111</x>
+        <y>222</y>
+      </center>
+      <size>
+        <x>333</x>
+        <y>444</y>
+      </size>
+      <rotation>
+        55
+      </rotation>
+      <description>
+        Ojojojojojo
+      </description>
+    </image>
+  </images>
+</settings>

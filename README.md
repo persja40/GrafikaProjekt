@@ -1,5 +1,8 @@
 # GrafikaProjekt
 
+## Dokumentacja i inne przydatne linki:
+  - mały research po algorytmach https://docs.google.com/document/d/1AEY_pkLwdbrQl80nvCgeJlcr_0C7wWKl02LUrHCuM48/edit?usp=sharing
+  
 ## Instalacja: 
 
 Oprogramowanie i biblioteki:

@@ -11,6 +11,10 @@ int main()
 	WindowWidth = sf::VideoMode::getDesktopMode().width;
 	WindowHeight = sf::VideoMode::getDesktopMode().height;
 	sf::RenderWindow window(sf::VideoMode(WindowWidth, WindowHeight), "SFML works!", sf::Style::Fullscreen);
+	
+	//tinyxml2::XMLDocument xd;
+	//settings.loadProgramSettings(xd);
+	
 	sf::CircleShape shape(100.f);
 	shape.setFillColor(sf::Color::Green);
 

@@ -8,6 +8,10 @@ class ImageSettings
 {
 public :
 	 ImageSettings(tinyxml2::XMLNode* node);
+	 std::string getImageFilename();
+	 std::string getImageDescription();
+	 sf::Vector2f getImageCenter();
+	 sf::Vector2f getImageSize();
 private :
 	std::string filename;
 	std::string description;

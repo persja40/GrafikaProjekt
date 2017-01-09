@@ -55,6 +55,16 @@ void ProgramSettings::loadProgramSettings(tinyxml2::XMLNode * node)
 
 }
 
+int ProgramSettings::getImagesCount()
+{
+	return static_cast<int>(imageSettings.size());
+}
+
+ImageSettings ProgramSettings::getImageSettings(int node)//throws out_of_range
+{
+	return imageSettings.at(node);
+}
+
 void ProgramSettings::loadImageSettings(XMLNode * node)
 {
 	XMLNode* imageNode = node->FirstChildElement("image");

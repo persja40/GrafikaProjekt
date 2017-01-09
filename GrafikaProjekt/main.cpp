@@ -4,7 +4,7 @@
 
 int WindowWidth;
 int WindowHeight;
-
+std::vector<sf::Image> sfImages;
 int main()
 {
 	ProgramSettings settings("settings.xml");
@@ -12,12 +12,13 @@ int main()
 	WindowHeight = sf::VideoMode::getDesktopMode().height;
 	sf::RenderWindow window(sf::VideoMode(WindowWidth, WindowHeight), "SFML works!", sf::Style::Fullscreen);
 	
-	//tinyxml2::XMLDocument xd;
-	//settings.loadProgramSettings(xd);
-	
+	for (int i = 0; i < settings.getImagesCount(); i++) {
+		sfImages.push_back(sf::Image());
+		sfImages.back().loadFromFile(settings.getImageSettings(i).getImageFilename());
+	}
 	sf::CircleShape shape(100.f);
 	shape.setFillColor(sf::Color::Green);
-
+	
 	while (window.isOpen()) {
 		sf::Event event;
 		while (window.pollEvent(event)) {

@@ -37,3 +37,23 @@ ImageSettings::ImageSettings(XMLNode * node)
 	
 
 }
+
+std::string ImageSettings::getImageFilename()
+{
+	return *new std::string(filename);
+}
+
+std::string ImageSettings::getImageDescription()
+{
+	return *new std::string(description);
+}
+
+sf::Vector2f ImageSettings::getImageCenter()
+{
+	return *new sf::Vector2f(center);
+}
+
+sf::Vector2f ImageSettings::getImageSize()
+{
+	return *new sf::Vector2f(size);
+}

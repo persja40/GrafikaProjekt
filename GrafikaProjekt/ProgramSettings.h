@@ -12,7 +12,8 @@ public :
 	ProgramSettings(std::string settingsFilename);
 
 	void loadProgramSettings(tinyxml2::XMLNode* node);
-
+	int getImagesCount();
+	ImageSettings getImageSettings(int node);
 
 private :
 	void loadImageSettings(tinyxml2::XMLNode* node);

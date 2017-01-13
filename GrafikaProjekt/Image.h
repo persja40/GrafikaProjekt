@@ -3,15 +3,20 @@
 #include <string>
 #include "Color.h"
 #include <SFML\Graphics.hpp>
-
+#include <memory>
 class Image
 {
 public :
 	Image(const int width, const int height);
 	Image(const std::string& filename);
+	Image(const sf::Image& image);
+	Image(const sf::RenderTexture* texture);
+	
+	void free();
 
 
 	sf::Image GenerateSfImage() const;
+	sf::RenderTexture* GenerateRenderTexture() const;
 
 	inline Color getPixel(const int x, const int y) const;
 	inline Color getPixel(const int index) const;
@@ -22,7 +27,8 @@ public :
 	inline int getWidth() const;
 	int getHeight() const;
 private:
-	Color *pixels;
+	void loadFromImage(const sf::Image &image);
+	Color* pixels;
 	int width;
 	int height;
 };
@@ -56,3 +62,5 @@ inline int Image::getHeight() const
 {
 	return height;
 }
+
+

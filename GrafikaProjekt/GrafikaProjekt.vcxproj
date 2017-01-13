@@ -157,6 +157,7 @@
   <ItemGroup>
     <ClCompile Include="Borderer.cpp" />
     <ClCompile Include="Color.cpp" />
+    <ClCompile Include="Global.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageSettings.cpp" />
     <ClCompile Include="main.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="Color.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="defines.h" />
+    <ClInclude Include="Global.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageSettings.h" />
     <ClInclude Include="ProgramMode.h" />

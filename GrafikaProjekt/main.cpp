@@ -2,14 +2,21 @@
 #include <SFML/Window/Keyboard.hpp>
 #include "ProgramSettings.h"
 #include "Image.h"
+#include "Global.h"
 #include "Borderer.h"
 int WindowWidth;
 int WindowHeight;
+
+#define DEBUG_MEMORY_LEAK 1
+
+#include <vld.h>
 
 std::vector<Image> images;
 
 int main()
 {
+	Global::font.loadFromFile("font.ttf");
+
 	ProgramSettings settings("settings.xml");
 	WindowWidth = sf::VideoMode::getDesktopMode().width;
 	WindowHeight = sf::VideoMode::getDesktopMode().height;
@@ -19,14 +26,15 @@ int main()
 		images.push_back(Image(settings.getImageSettings(i).getImageFilename()));
 	}
 
-	sf::Image bordered = Borderer::CreateBorder(images[0], Color::White, 10, 5, 100, 5).GenerateSfImage();
+	auto imgB = Borderer::CreateBorder(images[0], "Siema Eniu", Color::White, 10, 5, 100, 5);
+	sf::Image bordered = imgB.GenerateSfImage();
 
 	sf::Texture texture;
 	texture.loadFromImage(bordered);
 	sf::Sprite sprite;
 	sprite.setTexture(texture, true);
 	sprite.setPosition(300, 100);
-
+	
 	sf::CircleShape shape(100.f);
 	shape.setFillColor(sf::Color::Green);
 	
@@ -51,5 +59,8 @@ int main()
 		window.display();
 	}
 
+	for (int i = 0;i < images.size();++i)
+		images[i].free();
+	imgB.free();
 	return 0;
 }

@@ -8,6 +8,7 @@
 Oprogramowanie i biblioteki:
   - SFML wersja 2.4.1 (pobrana i wypakowana np: do folderu C:\SFML-2.4.1) http://www.sfml-dev.org/files/SFML-2.4.1-windows-vc14-32-bit.zip
   - Microsoft Visual Studio Community 2015
+  - Visual Leak Detector ( https://vld.codeplex.com/ )
   
 Link do tutoriala na podstawie którego zainicjalizowano projekt:
   - http://www.sfml-dev.org/tutorials/2.4/start-vc.php

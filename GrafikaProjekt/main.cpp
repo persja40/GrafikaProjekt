@@ -2,7 +2,7 @@
 #include <SFML/Window/Keyboard.hpp>
 #include "ProgramSettings.h"
 #include "Image.h"
-
+#include "Borderer.h"
 int WindowWidth;
 int WindowHeight;
 
@@ -18,6 +18,15 @@ int main()
 	for (int i = 0; i < settings.getImagesCount(); i++) {
 		images.push_back(Image(settings.getImageSettings(i).getImageFilename()));
 	}
+
+	sf::Image bordered = Borderer::CreateBorder(images[0], Color::White, 10, 5, 100, 5).GenerateSfImage();
+
+	sf::Texture texture;
+	texture.loadFromImage(bordered);
+	sf::Sprite sprite;
+	sprite.setTexture(texture, true);
+	sprite.setPosition(300, 100);
+
 	sf::CircleShape shape(100.f);
 	shape.setFillColor(sf::Color::Green);
 	
@@ -38,6 +47,7 @@ int main()
 
 		window.clear();
 		window.draw(shape);
+		window.draw(sprite);
 		window.display();
 	}
 

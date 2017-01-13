@@ -23,46 +23,39 @@ Image::Image(const std::string& filename)
 
 	for (int i = 0; i < width * height; ++i)
 	{
-		int r = *pixelPtr;
-		int g = *(++pixelPtr);
-		int b = *(++pixelPtr);
-		int a = *(++pixelPtr);
+		int r = *(pixelPtr + 0);
+		int g = *(pixelPtr + 1);
+		int b = *(pixelPtr + 2);
+		int a = *(pixelPtr + 3);
 
 		pixels[i].r = r;
 		pixels[i].g = g;
 		pixels[i].b = b;
 		pixels[i].a = a;
+
+		pixelPtr += 4;
 	}
 
 }
 
 
-inline Color Image::getPixel(const int x, const int y)
+sf::Image Image::GenerateSfImage() const
 {
-	return pixels[y * width + x];
+	sf::Image image;
+	sf::Uint8 *pixels = new sf::Uint8[width * height * 4];
+	for (int i = 0; i < width * height; ++i)
+	{
+		auto col = getPixel(i);
+		pixels[i * 4 + 0] = col.r;
+		pixels[i * 4 + 1] = col.g;
+		pixels[i * 4 + 2] = col.b;
+		pixels[i * 4 + 3] = col.a;
+	}
+
+	image.create(width, height, pixels);
+
+	return image;
+
+
 }
 
-inline Color Image::getPixel(const int index)
-{
-	return pixels[index];
-}
-
-inline void Image::setPixel(const int x, const int y, const Color& val)
-{
-	pixels[y * width + x] = val;
-}
-
-inline void Image::setPixel(const int index, const Color& val)
-{
-	pixels[index] = val;
-}
-
-inline int Image::getWidth()
-{
-	return width;
-}
-
-inline int Image::getHeight()
-{
-	return height;
-}

@@ -5,7 +5,7 @@
   </program>
   <images>
     <image>
-      <filename>dupa.jpg</filename>
+      <filename>test.jpg</filename>
       <center>
         <x>333</x>
         <y>666</y>
@@ -23,7 +23,7 @@
     </image>
 
     <image>
-      <filename>dupa2.jpg</filename>
+       <filename>test.jpg</filename>
       <center>
         <x>111</x>
         <y>222</y>

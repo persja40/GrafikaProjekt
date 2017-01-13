@@ -1,10 +1,13 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include "ProgramSettings.h"
+#include "Image.h"
 
 int WindowWidth;
 int WindowHeight;
-std::vector<sf::Image> sfImages;
+
+std::vector<Image> images;
+
 int main()
 {
 	ProgramSettings settings("settings.xml");
@@ -13,8 +16,7 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(WindowWidth, WindowHeight), "SFML works!", sf::Style::Fullscreen);
 	
 	for (int i = 0; i < settings.getImagesCount(); i++) {
-		sfImages.push_back(sf::Image());
-		sfImages.back().loadFromFile(settings.getImageSettings(i).getImageFilename());
+		images.push_back(Image(settings.getImageSettings(i).getImageFilename()));
 	}
 	sf::CircleShape shape(100.f);
 	shape.setFillColor(sf::Color::Green);

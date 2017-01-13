@@ -155,14 +155,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageSettings.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ProgramSettings.cpp" />
     <ClCompile Include="tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Color.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="defines.h" />
+    <ClInclude Include="Image.h" />
     <ClInclude Include="ImageSettings.h" />
     <ClInclude Include="ProgramMode.h" />
     <ClInclude Include="ProgramSettings.h" />

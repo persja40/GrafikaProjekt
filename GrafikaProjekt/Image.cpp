@@ -35,7 +35,6 @@ Image::Image(const std::string& filename)
 
 		pixelPtr += 4;
 	}
-
 }
 
 
@@ -56,6 +55,6 @@ sf::Image Image::GenerateSfImage() const
 
 	return image;
 
-
+	delete[] pixels;
 }
 

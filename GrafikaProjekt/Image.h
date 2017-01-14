@@ -10,7 +10,8 @@ public :
 	Image(const int width, const int height);
 	Image(const std::string& filename);
 	Image(const sf::Image& image);
-	Image(const sf::RenderTexture* texture);
+
+	void drawOn(Image& other, int x, int y);
 	
 	void free();
 
@@ -24,10 +25,17 @@ public :
 	inline void setPixel(const int x, const int y, const Color& val);
 	inline void setPixel(const int index, const Color& val);
 
+	inline void blendPixel(const int x, const int y, const Color& val, const float alpha);
+	inline void blendPixel(const int index, const Color&val, const float alpha);
+
+	inline void setAlpha(const float& value);
+
 	inline int getWidth() const;
-	int getHeight() const;
+	inline int getHeight() const;
+	inline float getAlpha() const;
 private:
 	void loadFromImage(const sf::Image &image);
+	float alpha;
 	Color* pixels;
 	int width;
 	int height;
@@ -53,6 +61,16 @@ inline void Image::setPixel(const int index, const Color& val)
 	pixels[index] = val;
 }
 
+inline void Image::blendPixel(const int x, const int y, const Color& val, const float otherAlpha)
+{
+	pixels[y * width + x].blendWith(val, alpha, otherAlpha);
+}
+
+inline void Image::blendPixel(const int index, const Color& val, const float otherAlpha)
+{
+	pixels[index].blendWith(val, alpha, otherAlpha);
+}
+
 inline int Image::getWidth() const
 {
 	return width;
@@ -64,3 +82,12 @@ inline int Image::getHeight() const
 }
 
 
+inline float Image::getAlpha() const
+{
+	return alpha;
+}
+
+inline void Image::setAlpha(const float& value)
+{
+	alpha = value;
+}

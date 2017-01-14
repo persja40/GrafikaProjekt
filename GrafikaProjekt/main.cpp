@@ -25,8 +25,12 @@ int main()
 	for (int i = 0; i < settings.getImagesCount(); i++) {
 		images.push_back(Image(settings.getImageSettings(i).getImageFilename()));
 	}
-
 	auto imgB = Borderer::CreateBorder(images[0], "Siema Eniu", Color::White, 10, 5, 100, 5);
+	imgB.setAlpha(0.7);
+	images[1].setAlpha(0.6);
+	images[1].drawOn(imgB, 0, 0);
+
+
 	sf::Image bordered = imgB.GenerateSfImage();
 
 	sf::Texture texture;

@@ -3,6 +3,8 @@
 
 Size::Size(const unsigned & x, const unsigned & y)
 {
+	this->x = x;
+	this->y = y;
 }
 
 Size::~Size()

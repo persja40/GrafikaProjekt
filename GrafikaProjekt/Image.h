@@ -1,6 +1,7 @@
 #pragma once
 #include <stdint.h>
 #include <string>
+#include <cstring>
 #include "Color.h"
 #include <SFML\Graphics.hpp>
 #include <memory>
@@ -20,6 +21,8 @@ public :
 
 	inline Color getPixel(const int x, const int y) const;
 	inline Color getPixel(const int index) const;
+
+	inline uint8_t * getPixmap() const;
 
 	inline void setPixel(const int x, const int y, const Color& val);
 	inline void setPixel(const int index, const Color& val);
@@ -41,6 +44,11 @@ inline Color Image::getPixel(const int x, const int y) const
 inline Color Image::getPixel(const int index) const
 {
 	return pixels[index];
+}
+
+inline uint8_t * Image::getPixmap() const
+{
+	return (uint8_t *) this->pixels;
 }
 
 inline void Image::setPixel(const int x, const int y, const Color& val)

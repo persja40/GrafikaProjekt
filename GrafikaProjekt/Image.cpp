@@ -30,6 +30,8 @@ void Image::loadFromImage(const sf::Image & image)
 
 	pixels = new Color[width * height];
 
+	memcpy(pixels, image.getPixelsPtr(), width*height * 4);
+	/*
 	const sf::Uint8 *pixelPtr = image.getPixelsPtr();
 
 	for (int i = 0; i < width * height; ++i)
@@ -45,7 +47,7 @@ void Image::loadFromImage(const sf::Image & image)
 		pixels[i].a = a;
 
 		pixelPtr += 4;
-	}
+	}*/
 }
 Image::Image(const sf::RenderTexture *texture)
 {
@@ -57,7 +59,10 @@ Image::Image(const sf::RenderTexture *texture)
 	height = size.y;
 
 	pixels = new Color[width * height];
+	memcpy(pixels, image.getPixelsPtr(), width*height * 4);
 
+	/*
+	
 	const sf::Uint8 *pixelPtr = image.getPixelsPtr();
 
 	for (int i = 0; i < width * height; ++i)
@@ -73,7 +78,7 @@ Image::Image(const sf::RenderTexture *texture)
 		pixels[i].a = a;
 
 		pixelPtr += 4;
-	}
+	}*/
 }
 
 void Image::free()
@@ -85,7 +90,9 @@ void Image::free()
 sf::Image Image::GenerateSfImage() const
 {
 	sf::Image image;
-	sf::Uint8 *pixels = new sf::Uint8[width * height * 4];
+	//sf::Uint8 *pixels = new sf::Uint8[width * height * 4];
+
+	/*
 	for (int i = 0; i < width * height; ++i)
 	{
 		auto col = getPixel(i);
@@ -97,13 +104,22 @@ sf::Image Image::GenerateSfImage() const
 
 	image.create(width, height, pixels);
 	delete[] pixels;
+
+
+	*/
+	image.create(width, height, getPixmap());
+	
 	return image;
 }
 
+// CO TO ROBI ? JAK DZIA£A ?
 sf::RenderTexture* Image::GenerateRenderTexture() const
 {
 	sf::RenderTexture *rTexture = new sf::RenderTexture();
+
+	/*
 	sf::Uint8 *pixels = new sf::Uint8[width * height * 4];
+
 	for (int i = 0; i < width * height; ++i)
 	{
 		auto col = getPixel(i);
@@ -111,17 +127,17 @@ sf::RenderTexture* Image::GenerateRenderTexture() const
 		pixels[i * 4 + 1] = col.g;
 		pixels[i * 4 + 2] = col.b;
 		pixels[i * 4 + 3] = col.a;
-	}
+	}*/
 
+	/*	
 	sf::Texture *texture = new sf::Texture();
 	texture->create(width, height);
 	texture->loadFromImage(GenerateSfImage());
+	*/
 	
-	
+	/*
 	delete[] pixels;
-
+	*/
 	return rTexture;
-
-	
 }
 

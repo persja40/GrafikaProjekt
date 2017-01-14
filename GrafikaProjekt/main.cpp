@@ -25,15 +25,22 @@ int main()
 	for (int i = 0; i < settings.getImagesCount(); i++) {
 		images.push_back(Image(settings.getImageSettings(i).getImageFilename()));
 	}
-
 	auto imgB = Borderer::CreateBorder(images[0], "Siema Eniu", Color::White, 10, 5, 100, 5);
-	sf::Image bordered = imgB.GenerateSfImage();
+	imgB.setAlpha(0.1);
+	images[1].setAlpha(0.6);
+	images[1].drawOn(imgB, 100, 100);
+
+
+	Image screen(WindowWidth, WindowHeight);
+	imgB.drawOn(screen, 300, 120);
+
+
+	sf::Image bordered = screen.GenerateSfImage();
 
 	sf::Texture texture;
 	texture.loadFromImage(bordered);
 	sf::Sprite sprite;
 	sprite.setTexture(texture, true);
-	sprite.setPosition(300, 100);
 	
 	sf::CircleShape shape(100.f);
 	shape.setFillColor(sf::Color::Green);
@@ -62,5 +69,6 @@ int main()
 	for (int i = 0;i < images.size();++i)
 		images[i].free();
 	imgB.free();
+	screen.free();
 	return 0;
 }

@@ -1,0 +1,74 @@
+<settings>
+  <program>
+    <frame>true</frame>
+    <background>table.jpg</background>
+    <mode>3</mode>
+    <speed>3.0</speed>
+    <delay>100</delay>
+  </program>
+  <images>
+    <image>
+      <filename>test.jpg</filename>
+      <size>
+        <x>300</x>
+        <y>250</y>
+      </size>
+      <description>
+        Zle zwierze.
+      </description>
+      <frame>
+        <r>255</r>
+        <g>255</g>
+        <b>255</b>
+      </frame>
+    </image>
+
+    <image>
+       <filename>test2.jpg</filename>
+      <size>
+        <x>333</x>
+        <y>200</y>
+      </size>
+      <description>
+        Haha!
+      </description>
+      <frame>
+        <r>0</r>
+        <g>255</g>
+        <b>0</b>
+      </frame>
+    </image>
+
+    <image>
+      <filename>malbork.jpg</filename>
+      <size>
+        <x>400</x>
+        <y>203</y>
+      </size>
+      <description>
+        Malbork
+      </description>
+      <frame>
+        <r>255</r>
+        <g>0</g>
+        <b>0</b>
+      </frame>
+    </image>
+
+    <image>
+      <filename>malbork2.jpg</filename>
+      <size>
+        <x>333</x>
+        <y>444</y>
+      </size>
+      <description>
+        Malbork
+      </description>
+      <frame>
+        <r>0</r>
+        <g>0</g>
+        <b>255</b>
+      </frame>
+    </image>
+  </images>
+</settings>

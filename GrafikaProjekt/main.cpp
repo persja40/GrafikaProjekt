@@ -45,6 +45,12 @@ int main()
 		Image tmp(settings.getImageSettings(i).getImageFilename());
 		Image scaled = ImageTransformator::rescaleImage(tmp, sf::Vector2i(settings.getImageSettings(i).getImageSize().x, settings.getImageSettings(i).getImageSize().y));
 
+		if (settings.getProgramMode() == programMode::Smooth)
+		{
+			scaled.free();
+			scaled = ImageTransformator::rescaleImage(tmp, sf::Vector2i(settings.getImageSettings(0).getImageSize().x, settings.getImageSettings(0).getImageSize().y));
+		}
+
 		//images.push_back(scaled);
 		if (settings.isFrameEnabled())
 		{
@@ -139,9 +145,32 @@ int main()
 			}
 			break;
 		}
+		case programMode::Smooth:
+		{
+			auto current = Blendable(ImageTransformator::applyScaleAndCentralRotation(images.at(currentImage), settings.getImageSettings(0).getRotation(), 1.0, 1.0), settings.getImageSettings(0).getImageCenter().x, settings.getImageSettings(0).getImageCenter().y);
+			current.image.changeAlpha(alpha);
+			blendables.push_back(current);
+
+			if (alpha >= 1)
+			{
+				delay += settings.getSpeed();
+				if (delay >= settings.getDelay())
+				{
+					memorize = true;
+					currentImage = (currentImage + 1) % images.size();
+					alpha = 0.0;
+					delay = 0.0;
+				}
+			}
+			else
+			{
+				alpha += 0.01 * settings.getSpeed();
+			}
+			break;
+		}
 		case programMode::Random:
 		{
-			static float zoom = random(1.5f, 2.f);
+			static float zoom = random(1.2f, 1.5f);
 			static float x = random(0, WindowWidth);
 			static float y = random(0, WindowHeight);
 			static float rotation = random(0.f, M_PI);
@@ -168,11 +197,6 @@ int main()
 				zoom -= 0.05 * settings.getSpeed();
 				rotation += random(0.02f,0.05f) * settings.getSpeed();
 			}
-
-			
-
-
-
 			break;
 		}
 		}

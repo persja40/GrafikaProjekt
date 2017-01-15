@@ -42,10 +42,13 @@
     <ClCompile Include="ImageTransformator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Size.cpp">
+    <ClCompile Include="Matrix2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Matrix2D.cpp">
+    <ClCompile Include="AlternativeBlender.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Blendable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -83,9 +86,6 @@
     <ClInclude Include="ImageTransformator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Size.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="InterpolationModes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -93,6 +93,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Matrix2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AlternativeBlender.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Blendable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -7,6 +7,7 @@ Image Borderer::CreateBorder(const Image& input, const Color& borderColor, const
 	const int width = input.getWidth() + leftMargin + rightMargin;
 	const int height = input.getHeight() + topMargin + bottomMargin;
 
+
 	Image bordered = Image(width, height);
 	for (int y = 0; y < height; ++y)
 		for (int x = 0; x < width; ++x)
@@ -36,6 +37,7 @@ Image Borderer::CreateBorder(const Image& input, const std::string & text, const
 	const int height = input.getHeight() + topMargin + bottomMargin;
 
 	Image bordered = Image(width, height);
+	
 	for (int y = 0; y < height; ++y)
 		for (int x = 0; x < width; ++x)
 		{
@@ -44,11 +46,18 @@ Image Borderer::CreateBorder(const Image& input, const std::string & text, const
 			if (x > leftMargin && x < width - rightMargin &&
 				y > topMargin   && y < height - bottomMargin)
 			{
-
+			
 				int inputX = x - leftMargin;
 				int inputY = y - topMargin;
 
-				color = input.getPixel(inputX, inputY);
+				Color imageColor = input.getPixel(inputX, inputY);
+				float alpha = imageColor.a;
+				alpha /= 255.0;
+				
+				color.r= (1.0-alpha)*((float) color.r)+alpha*((float)imageColor.r);
+				color.g = (1.0 - alpha)*((float)color.g) + alpha*((float)imageColor.g);
+				color.b = (1.0 - alpha)*((float)color.b) + alpha*((float)imageColor.b);
+				color.a = 255;
 			}
 
 			bordered.setPixel(x, y, color);

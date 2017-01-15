@@ -10,14 +10,14 @@ public :
 	 ImageSettings(tinyxml2::XMLNode* node);
 	 std::string getImageFilename();
 	 std::string getImageDescription();
-	 sf::Vector2f getImageCenter();
-	 sf::Vector2f getImageSize();
+	 sf::Vector2i getImageCenter();
+	 sf::Vector2i getImageSize();
 private :
 	std::string filename;
 	std::string description;
 
-	sf::Vector2f center;
-	sf::Vector2f size;
+	sf::Vector2i center;
+	sf::Vector2i size;
 	
 	float rotation;
 

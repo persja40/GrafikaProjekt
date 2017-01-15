@@ -2,24 +2,23 @@
 
 Image ImageTransformator::applyScaleAndCentralRotation(const Image & sourceImage, float angle, float sx, float sy, InterpolationModes interpolationMode)
 {
-	int longest = sqrt(((float)(sourceImage.getHeight()*sourceImage.getHeight()))*sx*sx + ((float)(sourceImage.getWidth()*sourceImage.getWidth()))*sy*sy);
-
+	int w = abs(((float)sourceImage.getHeight())*sin(angle)) + abs(((float)sourceImage.getWidth())*cos(angle));
+	int h = abs(((float)sourceImage.getHeight())*cos(angle)) + abs(((float)sourceImage.getWidth())*sin(angle));
 	
-	Size targetImageSize = Size((int)longest, (int)longest);
+	sf::Vector2i targetImageSize = sf::Vector2i(w*sx, h*sx);
 	return ImageTransformator::applyScaleAndCentralRotation(sourceImage, angle, targetImageSize, sx, sy, interpolationMode);
 }
 
-Image ImageTransformator::applyScaleAndCentralRotation(const Image & sourceImage, float angle, const Size & targetImageSize, float sx, float sy, InterpolationModes interpolationMode)
+Image ImageTransformator::applyScaleAndCentralRotation(const Image & sourceImage, float angle, const sf::Vector2i & targetImageSize, float sx, float sy, InterpolationModes interpolationMode)
 {
 	
-
 	Matrix2D transformationMatrix;
 	Matrix2D rotation = Matrix2D::getRotationMatrix(angle);
 	Matrix2D translation = Matrix2D::getTranslationMatrix((float)sourceImage.getWidth() / 2.0, (float)sourceImage.getHeight() / 2.0);
-	Matrix2D reverseTranslation = Matrix2D::getTranslationMatrix(-(float)targetImageSize.getX() / 2.0, -(float)targetImageSize.getY() / 2.0);
-	Matrix2D scale = Matrix2D::getScaleMatrix(-1.0/sx, 1.0/sy);
+	Matrix2D reverseTranslation = Matrix2D::getTranslationMatrix(-(float)targetImageSize.x / 2.0, -(float)targetImageSize.y / 2.0);
+	Matrix2D scale = Matrix2D::getScaleMatrix(1/sx, 1/sy);
 
-	Image resultImage(targetImageSize.getX(), targetImageSize.getY());
+	Image resultImage(targetImageSize.x, targetImageSize.y);
 
 	transformationMatrix = translation*scale*rotation*reverseTranslation;
 
@@ -30,24 +29,24 @@ Image ImageTransformator::applyScaleAndCentralRotation(const Image & sourceImage
 
 	sourceH = sourceImage.getHeight();
 	sourceW = sourceImage.getWidth();
-	targetW = targetImageSize.getX();
-	targetH = targetImageSize.getY();
+	targetW = targetImageSize.x;
+	targetH = targetImageSize.y;
 
 	uint32_t * sourcePixmap = (uint32_t *) sourceImage.getPixmap();
 	uint32_t * destPixmap = (uint32_t *) resultImage.getPixmap();
 	
 	if (interpolationMode == bilinear) {
-		//#pragma omp parallel
-		for (unsigned row=0; row < targetImageSize.getX(); row++) {
+		
+		for (unsigned row=0; row < targetImageSize.y; row++) {
 			float sourceX, sourceY, xDelta, yDelta;
 			float rawColorTop[4], rawColorBottom[4], rawTotal[4];
 			int xCeil, yCeil, yFloor, xFloor;
 			uint8_t * leftTop, *leftBottom, *rightTop, *rightBottom, *resultColor;
 
-			for (unsigned column=0; column < targetImageSize.getY(); column++) {
+			for (unsigned column=0; column < targetImageSize.x; column++) {
 				
-				sourceX = translationArray[0] * ((float)row) + translationArray[1] * ((float)column) + translationArray[2];
-				sourceY = translationArray[3] * ((float)row) + translationArray[4] * ((float)column) + translationArray[5];
+				sourceX = translationArray[0] * ((float)column) + translationArray[1] * ((float)row) + translationArray[2];
+				sourceY = translationArray[3] * ((float)column) + translationArray[4] * ((float)row) + translationArray[5];
 
 				// interpolation
 
@@ -70,14 +69,6 @@ Image ImageTransformator::applyScaleAndCentralRotation(const Image & sourceImage
 				rightTop = (uint8_t *) (sourcePixmap + xCeil + sourceW*yCeil);
 				leftBottom = (uint8_t *)(sourcePixmap + xFloor + sourceW*yFloor);
 				rightBottom = (uint8_t *)(sourcePixmap + xCeil + sourceW*yFloor);
-
-				/*
-				rightTop = sourceImage.getPixel(xCeil, yCeil);
-				leftBottom = sourceImage.getPixel(xFloor, yFloor);
-				rightBottom = sourceImage.getPixel(xCeil, yFloor);
-				leftTop = sourceImage.getPixel(xFloor, yCeil);
-				*/
-
 				
 				// LERP 1 TOP
 				rawColorTop[0] = ((float)leftTop[0])*(1.0 - xDelta) + ((float)rightTop[0])*xDelta;
@@ -99,23 +90,20 @@ Image ImageTransformator::applyScaleAndCentralRotation(const Image & sourceImage
 
 				// SAVE 
 
-				//Color c = { (uint8_t)rawTotal[0]  , (uint8_t)rawTotal[1], (uint8_t)rawTotal[2]  , (uint8_t)rawTotal[3] };
-				//resultImage.setPixel(row, column, c);
 				destPixmap[row*targetW + column] = ((uint8_t) rawTotal[0]) | ((uint8_t) rawTotal[1])<<8 |((uint8_t) rawTotal[2])<<16 | ((uint8_t)rawTotal[3])<<24 ;
 			}
 		}
-		
+		delete[] translationArray;
 		
 	}
 
-	
 	return resultImage;
 }
 
-Image ImageTransformator::rescaleImage(Image & sourceImage, const Size & targetImageSize, InterpolationModes interpolationMode)
+Image ImageTransformator::rescaleImage(Image & sourceImage, const sf::Vector2i & targetImageSize, InterpolationModes interpolationMode)
 {
-	float sx = (float)targetImageSize.getX() / (float)sourceImage.getWidth();
-	float sy = (float)targetImageSize.getY() / (float)sourceImage.getHeight();
+	float sx = (float)targetImageSize.x / (float)sourceImage.getWidth();
+	float sy = (float)targetImageSize.y / (float)sourceImage.getHeight();
 
 	return ImageTransformator::applyScaleAndCentralRotation(sourceImage, 0.0, targetImageSize,sx,sy, interpolationMode);
 }

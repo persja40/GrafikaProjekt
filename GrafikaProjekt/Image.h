@@ -11,14 +11,20 @@ public :
 	Image(const int width, const int height);
 	Image(const std::string& filename);
 	Image(const sf::Image& image);
-
-	void drawOn(Image& other, int x, int y);
+	
+	
+	//void drawOn(Image& other, int x, int y);
 	
 	void free();
+	void setAlpha(uint8_t value);
+	void setAlphaForNotTransparent(uint8_t value);
+	void changeAlpha(float ratio);
 
+	// size must be the same
+	void fastAssign(const Image & source);
+	Image copy();
 
 	sf::Image GenerateSfImage() const;
-	sf::RenderTexture* GenerateRenderTexture() const;
 
 	inline Color getPixel(const int x, const int y) const;
 	inline Color getPixel(const int index) const;
@@ -28,17 +34,11 @@ public :
 	inline void setPixel(const int x, const int y, const Color& val);
 	inline void setPixel(const int index, const Color& val);
 
-	inline void blendPixel(const int x, const int y, const Color& val, const float alpha);
-	inline void blendPixel(const int index, const Color&val, const float alpha);
-
-	inline void setAlpha(const float& value);
-
 	inline int getWidth() const;
 	inline int getHeight() const;
-	inline float getAlpha() const;
+
 private:
 	void loadFromImage(const sf::Image &image);
-	float alpha;
 	Color* pixels;
 	int width;
 	int height;
@@ -69,15 +69,6 @@ inline void Image::setPixel(const int index, const Color& val)
 	pixels[index] = val;
 }
 
-inline void Image::blendPixel(const int x, const int y, const Color& val, const float otherAlpha)
-{
-	pixels[y * width + x].blendWith(val, alpha, otherAlpha);
-}
-
-inline void Image::blendPixel(const int index, const Color& val, const float otherAlpha)
-{
-	pixels[index].blendWith(val, alpha, otherAlpha);
-}
 
 inline int Image::getWidth() const
 {
@@ -87,15 +78,4 @@ inline int Image::getWidth() const
 inline int Image::getHeight() const
 {
 	return height;
-}
-
-
-inline float Image::getAlpha() const
-{
-	return alpha;
-}
-
-inline void Image::setAlpha(const float& value)
-{
-	alpha = value;
 }

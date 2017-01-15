@@ -7,12 +7,12 @@
     <image>
       <filename>test.jpg</filename>
       <center>
-        <x>333</x>
-        <y>666</y>
+        <x>400</x>
+        <y>400</y>
       </center>
       <size>
-        <x>123</x>
-        <y>321</y>
+        <x>300</x>
+        <y>250</y>
       </size>
       <rotation>
         12.34
@@ -25,8 +25,8 @@
     <image>
        <filename>test2.jpg</filename>
       <center>
-        <x>111</x>
-        <y>222</y>
+        <x>300</x>
+        <y>300</y>
       </center>
       <size>
         <x>333</x>

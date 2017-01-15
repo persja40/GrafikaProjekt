@@ -126,12 +126,15 @@
       <PreprocessorDefinitions>SFML_STATIC;WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>C:\SFML-2.4.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <OpenMPSupport>true</OpenMPSupport>
+      <OpenMPSupport>false</OpenMPSupport>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
       <FloatingPointModel>Fast</FloatingPointModel>
       <CallingConvention>Cdecl</CallingConvention>
       <AdditionalOptions> /QxAVX %(AdditionalOptions)</AdditionalOptions>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -161,6 +164,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AlternativeBlender.cpp" />
+    <ClCompile Include="Blendable.cpp" />
     <ClCompile Include="Borderer.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Global.cpp" />
@@ -170,10 +175,11 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Matrix2D.cpp" />
     <ClCompile Include="ProgramSettings.cpp" />
-    <ClCompile Include="Size.cpp" />
     <ClCompile Include="tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AlternativeBlender.h" />
+    <ClInclude Include="Blendable.h" />
     <ClInclude Include="Borderer.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Debug.h" />
@@ -187,7 +193,6 @@
     <ClInclude Include="ProgramMode.h" />
     <ClInclude Include="ProgramSettings.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Size.h" />
     <ClInclude Include="tinyxml2.h" />
   </ItemGroup>
   <ItemGroup>

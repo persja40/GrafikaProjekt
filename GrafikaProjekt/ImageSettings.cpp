@@ -48,12 +48,12 @@ std::string ImageSettings::getImageDescription()
 	return std::string(description);
 }
 
-sf::Vector2f ImageSettings::getImageCenter()
+sf::Vector2i ImageSettings::getImageCenter()
 {
-	return sf::Vector2f(center);
+	return sf::Vector2i(center);
 }
 
-sf::Vector2f ImageSettings::getImageSize()
+sf::Vector2i ImageSettings::getImageSize()
 {
-	return sf::Vector2f(size);
+	return sf::Vector2i(size);
 }

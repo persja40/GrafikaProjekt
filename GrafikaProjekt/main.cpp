@@ -19,6 +19,16 @@ int WindowHeight;
 
 std::vector<Image> images;
 
+int random(int min, int max)
+{
+	return min + rand() % (max - min);
+}
+
+float random(float min, float max)
+{
+	return min + (max - min) * (rand() % 1001) / 1000.f;
+}
+
 int main()
 {
 	Global::font.loadFromFile("font.ttf");
@@ -101,6 +111,7 @@ int main()
 		screen.fastAssign(buffer);
 		static int currentImage = 0;
 		static float alpha = 0;
+		static float delay = 0;
 		std::vector<Blendable> blendables;
 		bool memorize = false;
 		switch (settings.getProgramMode())
@@ -113,17 +124,55 @@ int main()
 
 			if (alpha >= 1)
 			{
-				if (currentImage < images.size() - 1)
+				delay += settings.getSpeed();
+				if (currentImage < images.size() - 1 && delay >= settings.getDelay())
 				{
 					memorize = true;
 					currentImage = (currentImage + 1);
 					alpha = 0.0;
+					delay = 0.0;
 				}
 			}
 			else
 			{
 				alpha+= 0.01 * settings.getSpeed();
 			}
+			break;
+		}
+		case programMode::Random:
+		{
+			static float zoom = random(1.5f, 2.f);
+			static float x = random(0, WindowWidth);
+			static float y = random(0, WindowHeight);
+			static float rotation = random(0.f, M_PI);
+
+			auto current = Blendable(ImageTransformator::applyScaleAndCentralRotation(images.at(currentImage), rotation, zoom, zoom), x, y);
+			blendables.push_back(current);
+
+			if (zoom <= 1)
+			{
+				zoom = 1.f;
+				delay += settings.getSpeed();
+				if (delay >= settings.getDelay())
+				{
+					memorize = true;
+					currentImage = (currentImage + 1) % images.size();
+					zoom = random(2.f, 5.f);
+					x = random(0, WindowWidth);
+					y = random(0, WindowHeight);
+					delay = 0.0;
+				}
+			}
+			else
+			{
+				zoom -= 0.05 * settings.getSpeed();
+				rotation += random(0.02f,0.05f) * settings.getSpeed();
+			}
+
+			
+
+
+
 			break;
 		}
 		}

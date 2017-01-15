@@ -71,6 +71,10 @@ void ProgramSettings::loadProgramSettings(tinyxml2::XMLNode * node)
 	speed = std::stof(node->FirstChildElement("speed")->GetText());
 	DEBUG(speed);
 
+	DEBUG_("delay = ");
+	delay = std::stof(node->FirstChildElement("delay")->GetText());
+	DEBUG(delay);
+
 }
 
 int ProgramSettings::getImagesCount()

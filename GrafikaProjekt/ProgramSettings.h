@@ -19,6 +19,7 @@ public :
 	programMode getProgramMode() const { return mode; }
 	bool isFrameEnabled() const { return frameEnabled; }
 	float getSpeed() const { return speed; }
+	float getDelay() const { return delay; }
 
 private :
 	void loadImageSettings(tinyxml2::XMLNode* node);
@@ -27,6 +28,7 @@ private :
 	programMode mode;
 	std::string background;
 	float speed;
+	float delay;
 
 
 };

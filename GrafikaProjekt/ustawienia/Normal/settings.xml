@@ -1,18 +1,25 @@
 <settings>
   <program>
     <frame>true</frame>
-    <background>table.jpg</background>
-    <mode>3</mode>
-    <speed>5.0</speed>
+    <background>piasek.jpg</background>
+    <mode>1</mode>
+    <speed>3.0</speed>
     <delay>100</delay>
   </program>
   <images>
     <image>
       <filename>test.jpg</filename>
+      <center>
+        <x>400</x>
+        <y>400</y>
+      </center>
       <size>
         <x>300</x>
         <y>250</y>
       </size>
+      <rotation>
+        12.34
+      </rotation>
       <description>
         Zle zwierze.
       </description>
@@ -25,10 +32,17 @@
 
     <image>
        <filename>test2.jpg</filename>
+      <center>
+        <x>300</x>
+        <y>300</y>
+      </center>
       <size>
         <x>333</x>
-        <y>200</y>
+        <y>444</y>
       </size>
+      <rotation>
+        55
+      </rotation>
       <description>
         Haha!
       </description>
@@ -41,12 +55,19 @@
 
     <image>
       <filename>malbork.jpg</filename>
+      <center>
+        <x>600</x>
+        <y>300</y>
+      </center>
       <size>
-        <x>400</x>
-        <y>203</y>
+        <x>800</x>
+        <y>407</y>
       </size>
+      <rotation>
+        180
+      </rotation>
       <description>
-        Malbork
+        Malbork - Piekny zamek
       </description>
       <frame>
         <r>255</r>
@@ -57,10 +78,17 @@
 
     <image>
       <filename>malbork2.jpg</filename>
+      <center>
+        <x>1400</x>
+        <y>600</y>
+      </center>
       <size>
         <x>333</x>
         <y>444</y>
       </size>
+      <rotation>
+        0
+      </rotation>
       <description>
         Malbork
       </description>

@@ -18,6 +18,11 @@ ImageSettings::ImageSettings(XMLNode * node)
 		center.x = std::stof(centerNode->FirstChildElement("x")->GetText());
 		center.y = std::stof(centerNode->FirstChildElement("y")->GetText());
 	}
+	else
+	{
+		center.x = 0;
+		center.y = 0;
+	}
 	DEBUG_(center.x); DEBUG_(", "); DEBUG(center.y);
 
 	DEBUG_("size = ");
@@ -25,7 +30,10 @@ ImageSettings::ImageSettings(XMLNode * node)
 	size.x = std::stof(sizeNode->FirstChildElement("x")->GetText());
 	size.y = std::stof(sizeNode->FirstChildElement("y")->GetText());
 	DEBUG_(size.x); DEBUG_(", "); DEBUG(size.y);
-	rotation = std::stof(node->FirstChildElement("rotation")->GetText()) * M_PI / 180  ;
+	auto rotationNode = node->FirstChildElement("rotation");
+	if(rotationNode != nullptr)
+		rotation = std::stof(rotationNode->GetText()) * M_PI / 180  ;
+	rotation = 0.f;
 
 	DEBUG("Loading description");
 	auto descriptionNode = node->FirstChildElement("description");

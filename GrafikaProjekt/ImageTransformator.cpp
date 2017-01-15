@@ -11,7 +11,6 @@ Image ImageTransformator::applyScaleAndCentralRotation(const Image & sourceImage
 
 Image ImageTransformator::applyScaleAndCentralRotation(const Image & sourceImage, float angle, const sf::Vector2i & targetImageSize, float sx, float sy, InterpolationModes interpolationMode)
 {
-	
 	Matrix2D transformationMatrix;
 	Matrix2D rotation = Matrix2D::getRotationMatrix(angle);
 	Matrix2D translation = Matrix2D::getTranslationMatrix((float)sourceImage.getWidth() / 2.0, (float)sourceImage.getHeight() / 2.0);

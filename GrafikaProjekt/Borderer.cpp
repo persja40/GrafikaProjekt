@@ -31,7 +31,7 @@ Image Borderer::CreateBorder(const Image& input, const Color& borderColor, const
 }
 
 //Musiałem tutaj użyć SFML niestety
-Image Borderer::CreateBorder(const Image& input, const std::string & text, const Color& borderColor, const int topMargin, const int rightMargin, const int bottomMargin, const int leftMargin)
+Image Borderer::CreateBorder(const Image& input, const std::string & text, const Color& borderColor,  const int topMargin, const int rightMargin, const int bottomMargin, const int leftMargin)
 {
 	const int width = input.getWidth() + leftMargin + rightMargin;
 	const int height = input.getHeight() + topMargin + bottomMargin;
@@ -54,7 +54,7 @@ Image Borderer::CreateBorder(const Image& input, const std::string & text, const
 				float alpha = imageColor.a;
 				alpha /= 255.0;
 				
-				color.r= (1.0-alpha)*((float) color.r)+alpha*((float)imageColor.r);
+				color.r = (1.0-alpha)*((float) color.r)+alpha*((float)imageColor.r);
 				color.g = (1.0 - alpha)*((float)color.g) + alpha*((float)imageColor.g);
 				color.b = (1.0 - alpha)*((float)color.b) + alpha*((float)imageColor.b);
 				color.a = 255;
@@ -67,13 +67,13 @@ Image Borderer::CreateBorder(const Image& input, const std::string & text, const
 
 	sf::Text sfText;
 	sfText.setString(text);
-	sfText.setFillColor(sf::Color::Black);
+	sfText.setFillColor(sf::Color(255 - borderColor.r,255-  borderColor.g,255 - borderColor.b, 255));
 	sfText.setFont(Global::font);
 	
 
 	sf::RenderTexture texture;
 	texture.create(sfText.getLocalBounds().width, sfText.getLocalBounds().height);
-	texture.clear(sf::Color::White);
+	texture.clear(sf::Color(borderColor.r, borderColor.g, borderColor.b, borderColor.a));
 
 	texture.draw(sfText);
 	texture.display();

@@ -35,6 +35,21 @@ void ProgramSettings::loadProgramSettings(tinyxml2::XMLNode * node)
 	string frame = node->FirstChildElement("frame")->GetText();
 	DEBUG(frame);
 
+	DEBUG_("Background = ");
+	auto backgroundNode = node->FirstChildElement("background");
+	if (backgroundNode != nullptr)
+	{
+
+		background = backgroundNode->GetText();
+		DEBUG(background);
+	}
+	else
+	{
+		background = "";
+		DEBUG("None");
+	}
+	
+
 	frameEnabled = (frame == "true");
 	DEBUG_("mode = ");
 	int modeValue = std::stoi(node->FirstChildElement("mode")->GetText());
@@ -52,6 +67,9 @@ void ProgramSettings::loadProgramSettings(tinyxml2::XMLNode * node)
 		mode = programMode::Random;
 		break;
 	}
+	DEBUG_("speed = ");
+	speed = std::stof(node->FirstChildElement("speed")->GetText());
+	DEBUG(speed);
 
 }
 

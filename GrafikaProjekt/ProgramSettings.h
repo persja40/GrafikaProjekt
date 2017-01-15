@@ -14,12 +14,19 @@ public :
 	void loadProgramSettings(tinyxml2::XMLNode* node);
 	int getImagesCount();
 	ImageSettings getImageSettings(int node);
+	
+	std::string getBackground() const { return background; }
+	programMode getProgramMode() const { return mode; }
+	bool isFrameEnabled() const { return frameEnabled; }
+	float getSpeed() const { return speed; }
 
 private :
 	void loadImageSettings(tinyxml2::XMLNode* node);
 	std::vector<ImageSettings> imageSettings;
 	bool frameEnabled;
 	programMode mode;
+	std::string background;
+	float speed;
 
 
 };

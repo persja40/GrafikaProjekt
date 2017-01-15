@@ -1,7 +1,9 @@
 <settings>
   <program>
     <frame>true</frame>
+    <background>piasek.jpg</background>
     <mode>1</mode>
+    <speed>3.0</speed>
   </program>
   <images>
     <image>
@@ -18,8 +20,13 @@
         12.34
       </rotation>
       <description>
-        Za gorami i za lasami bylo sobie zlo.
+        Zle zwierze.
       </description>
+      <frame>
+        <r>255</r>
+        <g>255</g>
+        <b>255</b>
+      </frame>
     </image>
 
     <image>
@@ -36,8 +43,59 @@
         55
       </rotation>
       <description>
-        Ojojojojojo
+        Haha!
       </description>
+      <frame>
+        <r>0</r>
+        <g>255</g>
+        <b>0</b>
+      </frame>
+    </image>
+
+    <image>
+      <filename>malbork.jpg</filename>
+      <center>
+        <x>600</x>
+        <y>300</y>
+      </center>
+      <size>
+        <x>800</x>
+        <y>407</y>
+      </size>
+      <rotation>
+        180
+      </rotation>
+      <description>
+        Malbork - Piekny zamek
+      </description>
+      <frame>
+        <r>255</r>
+        <g>0</g>
+        <b>0</b>
+      </frame>
+    </image>
+
+    <image>
+      <filename>malbork2.jpg</filename>
+      <center>
+        <x>1400</x>
+        <y>600</y>
+      </center>
+      <size>
+        <x>333</x>
+        <y>444</y>
+      </size>
+      <rotation>
+        0
+      </rotation>
+      <description>
+        Malbork
+      </description>
+      <frame>
+        <r>0</r>
+        <g>0</g>
+        <b>255</b>
+      </frame>
     </image>
   </images>
 </settings>

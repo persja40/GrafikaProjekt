@@ -13,8 +13,11 @@ ImageSettings::ImageSettings(XMLNode * node)
 
 	DEBUG_("center = ");
 	auto centerNode = node->FirstChildElement("center");
-	center.x = std::stof(centerNode->FirstChildElement("x")->GetText());
-	center.y = std::stof(centerNode->FirstChildElement("y")->GetText());
+	if (centerNode != nullptr)
+	{
+		center.x = std::stof(centerNode->FirstChildElement("x")->GetText());
+		center.y = std::stof(centerNode->FirstChildElement("y")->GetText());
+	}
 	DEBUG_(center.x); DEBUG_(", "); DEBUG(center.y);
 
 	DEBUG_("size = ");
@@ -22,7 +25,7 @@ ImageSettings::ImageSettings(XMLNode * node)
 	size.x = std::stof(sizeNode->FirstChildElement("x")->GetText());
 	size.y = std::stof(sizeNode->FirstChildElement("y")->GetText());
 	DEBUG_(size.x); DEBUG_(", "); DEBUG(size.y);
-	rotation = std::stof(node->FirstChildElement("rotation")->GetText()) * 180 / M_PI;
+	rotation = std::stof(node->FirstChildElement("rotation")->GetText()) * M_PI / 180  ;
 
 	DEBUG("Loading description");
 	auto descriptionNode = node->FirstChildElement("description");
@@ -33,6 +36,18 @@ ImageSettings::ImageSettings(XMLNode * node)
 	}
 	else
 		DEBUG("decription - not found");
+
+	DEBUG("Loading frame");
+	auto frameNode = node->FirstChildElement("frame");
+	if (frameNode != nullptr)
+	{
+		frameColor.r = std::stof(frameNode->FirstChildElement("r")->GetText());
+		frameColor.g = std::stof(frameNode->FirstChildElement("g")->GetText());
+		frameColor.b = std::stof(frameNode->FirstChildElement("b")->GetText());
+		frameColor.a = 255;
+	}
+	else
+		DEBUG("Frame not found");
 
 	
 
@@ -56,4 +71,14 @@ sf::Vector2i ImageSettings::getImageCenter()
 sf::Vector2i ImageSettings::getImageSize()
 {
 	return sf::Vector2i(size);
+}
+
+float ImageSettings::getRotation()
+{
+	return rotation;
+}
+
+Color ImageSettings::getFrameColor()
+{
+	return frameColor;
 }

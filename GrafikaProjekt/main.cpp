@@ -13,7 +13,7 @@ int WindowWidth;
 int WindowHeight;
 
 //#define FPS_CHECK 
-#define DEBUG_MEMORY_LEAK 1
+#define DEBUG_MEMORY_LEAK 0
 #include "Blendable.h"
 //#include <vld.h>
 
@@ -27,26 +27,43 @@ int main()
 	WindowWidth = sf::VideoMode::getDesktopMode().width;
 	WindowHeight = sf::VideoMode::getDesktopMode().height;
 	sf::RenderWindow window(sf::VideoMode(WindowWidth, WindowHeight), "SFML works!", sf::Style::Fullscreen);
-	
+
+
+
 	// prescale
 	for (int i = 0; i < settings.getImagesCount(); i++) {
-		Image tmp(settings.getImageSettings(i).getImageFilename());		
-		Image scaled = ImageTransformator::rescaleImage(tmp, sf::Vector2i(settings.getImageSettings(i).getImageSize().x*2, settings.getImageSettings(i).getImageSize().y*2));
-		
+		Image tmp(settings.getImageSettings(i).getImageFilename());
+		Image scaled = ImageTransformator::rescaleImage(tmp, sf::Vector2i(settings.getImageSettings(i).getImageSize().x, settings.getImageSettings(i).getImageSize().y));
+
 		//images.push_back(scaled);
-		// TODO add if 
-		images.push_back(Borderer::CreateBorder(scaled, settings.getImageSettings(i).getImageDescription(), Color::White, 10, 5, 100, 5));
-		scaled.free();
+		if (settings.isFrameEnabled())
+		{
+			images.push_back(Borderer::CreateBorder(scaled, settings.getImageSettings(i).getImageDescription(), settings.getImageSettings(i).getFrameColor(),  10, 5, 100, 5));
+			scaled.free();
+		}
+		else
+		{
+			images.push_back(scaled);
+		}
+
 		tmp.free();
 	}
 
 	// background set
-	Image background("piasek.jpg");	
-	Image backroundScaled = ImageTransformator::rescaleImage(background, sf::Vector2i(1024, 700));
+	Image background(WindowWidth, WindowHeight);
+	if (settings.getBackground() != "")
+	{
+		background.free();
+		background = Image(settings.getBackground());
+	}
+	Image backroundScaled = ImageTransformator::rescaleImage(background, sf::Vector2i(WindowWidth, WindowHeight));
 	background.free();
 
-	Image screen(1024, 700);
+	Image screen(WindowWidth, WindowHeight);
+	Image buffer(WindowWidth, WindowHeight);
 
+	buffer.fastAssign(backroundScaled);
+	
 	sf::Texture texture;
 	sf::Sprite sprite;
 	
@@ -54,7 +71,7 @@ int main()
 	std::vector <float> rotations;
 	for (int i = 0; i < images.size();i++) {
 		rotations.push_back(2.0*M_PI*((float)rand()) / ((float)RAND_MAX));
-		images.at(i).setAlphaForNotTransparent(200);
+		images.at(i).setAlphaForNotTransparent(255);
 	}
 
 	float ct=0;
@@ -81,28 +98,62 @@ int main()
 #endif 
 
 		// example render procedure
-		screen.fastAssign(backroundScaled);
-
-		// prepare image in blending order
+		screen.fastAssign(buffer);
+		static int currentImage = 0;
+		static float alpha = 0;
 		std::vector<Blendable> blendables;
-		for (int i = 0; i < images.size(); i++) {
-			blendables.push_back(Blendable(ImageTransformator::applyScaleAndCentralRotation(images.at(i),ct,0.5,0.5),settings.getImageSettings(i).getImageCenter().x, settings.getImageSettings(i).getImageCenter().y));
+		bool memorize = false;
+		switch (settings.getProgramMode())
+		{
+		case programMode::Normal:
+		{
+			auto current = Blendable(ImageTransformator::applyScaleAndCentralRotation(images.at(currentImage), settings.getImageSettings(currentImage).getRotation(), 1.0, 1.0), settings.getImageSettings(currentImage).getImageCenter().x, settings.getImageSettings(currentImage).getImageCenter().y);
+			current.image.changeAlpha(alpha);
+			blendables.push_back(current);
+
+			if (alpha >= 1)
+			{
+				if (currentImage < images.size() - 1)
+				{
+					memorize = true;
+					currentImage = (currentImage + 1);
+					alpha = 0.0;
+				}
+			}
+			else
+			{
+				alpha+= 0.01 * settings.getSpeed();
+			}
+			break;
 		}
+		}
+		// prepare image in blending order
+		
+		/*for (int i = 0; i < images.size(); i++) {
+			blendables.push_back(Blendable(ImageTransformator::applyScaleAndCentralRotation(images.at(i),ct,0.5,0.5),settings.getImageSettings(i).getImageCenter().x, settings.getImageSettings(i).getImageCenter().y));
+			break;
+		}*/
 		
 		AlternativeBlender::BlendOnImage(screen, blendables);
-		for (int i = 0; i < images.size(); i++) {
+		for (int i = 0; i < blendables.size(); i++) {
 			blendables.at(i).image.free();
+			break;
 		}
 
-		
+		if (memorize)
+		{
+			buffer.fastAssign(screen);
+		}
 
 		//sent to GPU and render
 		texture.loadFromImage(screen.GenerateSfImage());
 		sprite.setTexture(texture, true);
 
-		window.clear();
+		//window.clear();
 		window.draw(sprite);
 		window.display();
+
+		
 
 		//fps inspection
 #ifdef FPS_CHECK

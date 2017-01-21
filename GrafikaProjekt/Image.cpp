@@ -16,14 +16,10 @@ Image::Image(const std::string& filename)
 	loadFromImage(image);
 }
 
-
 Image::Image(const sf::Image& image)
 {
 	loadFromImage(image);
 }
-
-
-
 
 
 void Image::loadFromImage(const sf::Image & image)
